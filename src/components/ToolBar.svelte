@@ -3,6 +3,12 @@ import { getContext } from "svelte";
 
 import { MindMapContext, MindMapContextKey } from "../data/MindMapContext";
 
+export let canActivateLeftNode: boolean;
+export let canActivateUpNode: boolean;
+export let canActivateDownNode: boolean;
+export let canActivateRightNode: boolean;
+export let canSave: boolean;
+
 let ctx = getContext<MindMapContext>(MindMapContextKey);
 
 function activateLeftNode() {
@@ -27,7 +33,7 @@ function onSaveBtnClick() {
 </script>
 
 <div class="toolbar">
-  {#if ctx.canActivateLeftNode()}  
+  {#if canActivateLeftNode}  
     <svg 
       class="tool" 
       viewBox="0 0 16 16" 
@@ -37,7 +43,7 @@ function onSaveBtnClick() {
     </svg>   
   {/if}
 
-  {#if ctx.canActivateUpNode()}
+  {#if canActivateUpNode}
     <svg 
       class="tool" 
       viewBox="0 0 16 16" 
@@ -47,7 +53,7 @@ function onSaveBtnClick() {
     </svg> 
   {/if}   
 
-  {#if ctx.canActivateDownNode()}
+  {#if canActivateDownNode}
     <svg 
       class="tool" 
       viewBox="0 0 16 16" 
@@ -57,7 +63,7 @@ function onSaveBtnClick() {
     </svg>  
   {/if}
 
-  {#if ctx.canActivateRightNode()}
+  {#if canActivateRightNode}
     <svg 
       class="tool" 
       viewBox="0 0 16 16" 
@@ -67,7 +73,7 @@ function onSaveBtnClick() {
     </svg>  
   {/if}
 
-  {#if ctx.getCanSave()}
+  {#if canSave}
     <svg 
       class="tool" 
       viewBox="0 0 16 16" 

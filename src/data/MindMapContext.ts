@@ -8,11 +8,11 @@ export class MindMapContext {
   protected activeNode?: NodeState;
   protected parents: Map<number, NodeState>;
   
-  constructor() {
+  constructor(protected updateHandler: () => void) {
     this.clearState();
   }
 
-  getRoot(): RootState {
+  getRoot(): RootState {    
     return this.root;
   }
 
@@ -41,10 +41,14 @@ export class MindMapContext {
 
   setCanSave(canSave: boolean): void {
     this.canSave = canSave;
+
+    this.updateHandler();
   }
   
   disposeActiveNode(): void {
     this.setActiveNode(undefined);
+
+    this.updateHandler();
   }
 
   parent(node: NodeState): NodeState | undefined {
@@ -123,8 +127,6 @@ export class MindMapContext {
 
   setNodeActive(node: NodeState, active: boolean) {
     node.active = active;
-
-    this.setCanSave(true);
   }
 
   setNodeEditable(node: NodeState, editable: boolean)  {
@@ -220,6 +222,8 @@ export class MindMapContext {
       }
 
       this.updateActiveNode(node);
+
+      this.updateHandler();
     }
   }
 
@@ -241,7 +245,7 @@ export class MindMapContext {
       this.setNodeCollapsed(parent, false);
     }
 
-    this.setCanSave(true);
+    this.setCanSave(true);    
   }
 
   removeNode(node: NodeState) {
@@ -313,7 +317,7 @@ export class MindMapContext {
       if(downNode) {
         this.setActiveNode(downNode);
       }
-    }    
+    }     
   }
 
   activateLeftNode() {
@@ -360,5 +364,7 @@ export class MindMapContext {
     } else {
       this.setInitialState();
     }
+
+    this.updateHandler();
   }
 };
